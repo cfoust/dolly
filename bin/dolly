@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source "$SCRIPT_DIR/../lib/all.sh"
+
+get_user_repos() {
+  github_get_repos
+}
+
+repos=$(get_user_repos | sort)
+
+choice=$(echo "$repos" | fzf -n 1 --with-nth=1)
+
+if [ -z "$choice" ]; then
+  exit 0
+fi
+
+echo "$choice"
