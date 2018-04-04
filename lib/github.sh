@@ -20,7 +20,7 @@ github_get_repos() {
   if have_cache "$cache_name"; then
     repos=$(get_cache "$cache_name")
   else
-    repos=$(curl -s -u "$DOLLY_GITHUB_USERNAME":"$DOLLY_GITHUB_TOKEN" "$API_URL/user/repos")
+    repos=$(curl -s -u "$DOLLY_GITHUB_USERNAME":"$DOLLY_GITHUB_TOKEN" "$API_URL/user/repos?per_page=100")
     dump_cache "$cache_name" "$repos"
   fi
 

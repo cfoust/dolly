@@ -12,7 +12,7 @@ function dolly_usage {
 
 dolly() {
   if [ "$1" == "--clean" ]; then
-    clear_all_caches
+    rm -rf "$HOME/.dolly/cache"
   fi
 
   if [ -z "$DOLLY_REPO_DIR" ]; then
@@ -31,8 +31,8 @@ dolly() {
   fi
 
   repo=$(echo "$choice" | awk '{ print $1; }')
-  repo_dir="$DEV_DIRECTORY/$repo"
-  clone_url=$(echo "$choice" | awk '{ print $3; }')
+  repo_dir="$DOLLY_REPO_DIR/$repo"
+  clone_url=$(echo "$choice" | awk '{ print $2; }')
 
   if [ ! -d "$repo_dir" ]; then
     git clone "$clone_url" "$repo_dir"
