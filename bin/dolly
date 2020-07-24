@@ -5,9 +5,16 @@ source "$SCRIPT_DIR/../lib/all.sh"
 
 get_user_repos() {
   github_get_repos
+  # also union with whatever we have already
+  find "$DOLLY_REPO_DIR" \
+    -maxdepth 3 \
+    -wholename '**/.git' \
+    -type d \
+    -printf '%P\n' | \
+    awk '{ print substr($0, 0, length($0)-5) }'
 }
 
-repos=$(get_user_repos | sort)
+repos=$(get_user_repos | sort -u -k1,1)
 
 choice=$(echo "$repos" | fzf -n 1 --with-nth=1)
 
